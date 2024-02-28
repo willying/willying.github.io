@@ -15,5 +15,4 @@ module.exports = {
       { text: 'React', link: '/react/' },
     ]
   },
-  base: '/vuepress/'
 }
