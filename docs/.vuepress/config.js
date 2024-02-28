@@ -14,5 +14,6 @@ module.exports = {
       { text: 'Vue', link: '/vue/' },
       { text: 'React', link: '/react/' },
     ]
-  }
+  },
+  base: '/vuepress/'
 }
