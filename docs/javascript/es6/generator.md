@@ -86,3 +86,82 @@ a.next() // {done: false, value: 2}
 a.next() // {done: false, value: 3}
 a.next() // {done: false, value: 'end'}
 ```
+## Generator函数配合自动执行器
+### 直接循环存在的问题
+Generator函数是一种新的异步编程解决方案，但是每次手动调用next()很麻烦，如果写一个循环来执行next()，代码如下:
+```javascript
+function* foo() {
+  yield 1
+  console.log('完成1')
+  yield 2
+  console.log('完成2')
+}
+const f = foo()
+const done = false
+while (!done) {
+  done = f.next().done
+}
+```
+看似没有问题，但是如果yield后面本身就是一个异步操作，就会有问题
+```javascript
+function* foo() {
+  yield readFile(file1)
+  console.log('完成1')
+  yield readFile(file2)
+  console.log('完成2')
+}
+const f = foo()
+const done = false
+while (!done) {
+  done = f.next().done
+}
+```
+### Thunk函数
+在javascript语言中，Thunk函数是指将多参数函数，将其替换为一个只接受一个回调函数作为参数的单参数函数。
+```javascript
+const path = require('path')
+const fs = require('fs')
+
+const thunk = (pathname) => {
+  return function(callback) {
+    fs.readFile(pathname,callback)
+  }
+}
+const path1 = path.join(__dirname,'file1.txt')
+const path2 = path.join(__dirname,'file2.txt')
+const readFileThunk = thunk(path1)
+readFileThunk(function(err,data){
+  console.log(data.toString())
+})
+```
+```javascript
+const path = require('path')
+const fs = require('fs')
+const path1 = path.join(__dirname, 'index.txt')
+const path2 = path.join(__dirname, 'index1.txt')
+
+const thunk = function(pathname) {
+  return function(callback) {
+    fs.readFile(pathname, 'utf8', callback)
+  }
+}
+
+function* f() {
+  const data1 = yield thunk(path1)
+  console.log(data1)
+  const data2 = yield thunk(path2)
+  console.log(data2)
+}
+
+function run(f) {
+  const it = f()
+  function nextStep(err,data) {
+    const result = it.next(data)
+    if (result.done) return
+    result.value(nextStep)
+  }
+  nextStep()
+}
+
+run(f)
+```

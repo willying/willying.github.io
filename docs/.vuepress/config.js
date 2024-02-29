@@ -8,7 +8,8 @@ module.exports = {
       { text: 'Javascript', link: '/javascript/', items: [
         { text: 'ES6', link: '/javascript/es6/', items: [
           { text: 'Interator', link: '/javascript/es6/interator/' },
-          { text: 'Generator', link: '/javascript/es6/generator/' }
+          { text: 'Generator', link: '/javascript/es6/generator/' },
+          { text: 'Async', link: '/javascript/es6/async/' },
         ]}
       ] },
       { text: 'Vue', link: '/vue/' , items: [
