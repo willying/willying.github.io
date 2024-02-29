@@ -11,8 +11,13 @@ module.exports = {
           { text: 'Generator', link: '/javascript/es6/generator/' }
         ]}
       ] },
-      { text: 'Vue', link: '/vue/' },
+      { text: 'Vue', link: '/vue/' , items: [
+        { text: 'Vue2', link: '/vue/vue2/'},
+        { text: 'Vue3', link: '/vue/vue3/'}
+      ]},
       { text: 'React', link: '/react/' },
+      { text: 'Node', link: '/node/' },
+      { text: 'Webpack', link: '/webpack/' },
     ]
   },
   base: '/'
