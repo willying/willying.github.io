@@ -10,8 +10,8 @@ module.exports = {
         choosen: "gitalk",
         options: {
           clientID: "1074e2fbd6bd8648a670",
-          clientSecret: "b5d00723533f593ea999a88a9d7354863e1384ef",
-          repo: "https://github.com/willying/willying.github.io",
+          clientSecret: "249ee50e324b93805f4b6511506f289d17c89a2b",
+          repo: "willying.github.io",
           owner: "willying",
           admin: ["willying"],
           distractionFreeMode: false,
