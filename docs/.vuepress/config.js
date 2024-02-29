@@ -18,6 +18,7 @@ module.exports = {
       { text: 'React', link: '/react/' },
       { text: 'Node', link: '/node/' },
       { text: 'Webpack', link: '/webpack/' },
+      { text: 'CI/CD', link: '/cicd/' },
     ]
   },
   base: '/'
