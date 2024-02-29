@@ -7,20 +7,6 @@ module.exports = {
   plugins: [
     "@vuepress/back-to-top",
     "@vuepress/nprogress",
-    [
-      "vuepress-plugin-comment",
-      {
-        choosen: "gitalk",
-        options: {
-          clientID: "1074e2fbd6bd8648a670",
-          clientSecret: "249ee50e324b93805f4b6511506f289d17c89a2b",
-          repo: "willying.github.io",
-          owner: "willying",
-          admin: ["willying"],
-          distractionFreeMode: false,
-        },
-      },
-    ],
   ],
   themeConfig: {
     nav: [
