@@ -168,3 +168,5 @@ function run(f) {
 
 run(f)
 ```
+### co模块
+co模块是一个封装更好的自动执行器，它支持yield的类型，不光包含thunk函数，还有promise对象，generator函数，数组，对象等。
