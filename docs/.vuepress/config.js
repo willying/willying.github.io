@@ -1,6 +1,9 @@
 module.exports = {
   title: "花果山集训营",
   description: "Just playing around",
+  head: [
+    ['link', { rel: 'icon', href: '/favicon.ico' }]
+  ],
   plugins: [
     "@vuepress/back-to-top",
     "@vuepress/nprogress",

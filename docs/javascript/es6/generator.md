@@ -1,3 +1,6 @@
+---
+permalink: /javascript/generator/
+---
 # Generator(生成器)
 ## 基本概念
 Generator生成器函数是ES6提供的一种异步编程解决方案，并且Generator函数的行为和传统函数完全不同
