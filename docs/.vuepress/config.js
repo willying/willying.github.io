@@ -27,6 +27,10 @@ module.exports = {
         ],
       },
       {
+        'text': '浏览器原理及性能优化',
+        link: '/browser/',
+      },
+      {
         text: "Vue",
         link: "/vue/",
         items: [
@@ -39,6 +43,12 @@ module.exports = {
       { text: "Webpack", link: "/webpack/" },
       { text: "CI/CD", link: "/cicd/" },
     ],
+    sidebar: {
+      '/browser/': [
+        '',
+        'property',
+      ]
+    }
   },
   base: "/",
 };

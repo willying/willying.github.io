@@ -173,3 +173,21 @@ function f1() {
   })
 }
 ```
+```javascript
+const {readFile} = require('fs')
+const {promisify} = require('util')
+const path = require('path')
+const file1 = path.join(__dirname, './file1.txt')
+const file2 = path.join(__dirname, './file2.txt')
+const file3 = path.join(__dirname, './file3.t')
+const readFileP = promisify(readFile)
+async function f2() {
+  const data1 = await readFileP(file1);
+  console.log('✌，完成了1，数据是'+ data1)
+  const data2 = await readFileP(file2);
+  console.log('✌，完成了1，数据是'+ data1 + data2)
+  const data3 = await readFileP(file3);
+  console.log('✌，完成了1，数据是'+ data1 + data2 + data3)
+}
+f2()
+```
