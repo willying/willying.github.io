@@ -38,6 +38,10 @@ module.exports = {
           { text: "Vue3", link: "/vue/vue3/" },
         ],
       },
+      {
+        text: 'TypeScript',
+        link: '/typescript/',
+      },
       { text: "React", link: "/react/" },
       { text: "Node", link: "/node/" },
       { text: "Webpack", link: "/webpack/" },
