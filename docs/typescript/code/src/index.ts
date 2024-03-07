@@ -1,28 +1,43 @@
-const sm: symbol = Symbol(123)
-const add: (x:number,y:number) => number = (x,y) => x + y
-add(1,2)
+// 约定结构
+interface Shape {
+  calculateArea(): number;
+}
 
-// 函数可选参数必须在必选参数后面
-const greet = (name: string, greeting?: string) => {
-  if (greeting) {
-    return `${greeting}, ${name}`
-  } else {
-    return `hello ${greeting}`
+class Circle implements Shape {
+  radius: number;
+  constructor(radius: number) {
+    this.radius = radius;
+  }
+  calculateArea() {
+    return Math.PI * this.radius ** 2;
   }
 }
-greet('will')
 
-
-const person: {
-  name: string,
-  age: number,
-  gender: string,
-  hobby?: string[]
-  [key: string]: any
-} = {
-  name: 'will',
-  age: 26,
-  gender: '男',
-  hobby: ['学习','看电影','打游戏']
+// 多态性
+interface Animal {
+  makeSound(): void;
 }
-console.log(person)
+class Dog implements Animal {
+  makeSound() {
+    console.log("Woof! Woof!");
+  }
+}
+class Cat implements Animal {
+  makeSound() {
+    console.log("Meow!");
+  }
+}
+
+function playAnimalSound(animal: Animal) {
+  animal.makeSound();
+}
+
+const myDog = new Dog();
+const myCat = new Cat();
+
+playAnimalSound(myDog); // 输出: Woof! Woof!
+playAnimalSound(myCat); // 输出: Meow!
+
+type A = number
+type B = string
+type C = A | B
