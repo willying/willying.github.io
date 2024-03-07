@@ -1,24 +1,13 @@
-namespace payment {
-  export function doPayment() {
-    console.log("Payment processed successfully.");
-  }
-}
+const sm: symbol = Symbol(123)
+const add: (x:number,y:number) => number = (x,y) => x + y
+add(1,2)
 
-interface IPerson {}
-
-function add<T>(a:T,b:T): T | undefined {
-  if (typeof a === 'number' && typeof b === 'number') {
-    return a + b as T;
-  } else if (typeof a === 'string' && typeof b === 'string') {
-    return a.concat(b) as T;
+// 函数可选参数必须在必选参数后面
+const greet = (name: string, greeting?: string) => {
+  if (greeting) {
+    return `${greeting}, ${name}`
   } else {
-    return a as any + b as any;
+    return `hello ${greeting}`
   }
 }
-
-const res = add<number>(1,2)
-const res2 = add<string>('hello','world')
-const res3 = add<number | string>(1,'2')
-console.log(res2)
-console.log(res3)
-payment.doPayment()
+greet('will')

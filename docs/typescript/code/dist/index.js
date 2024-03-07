@@ -1,25 +1,14 @@
 "use strict";
-var payment;
-(function (payment) {
-    function doPayment() {
-        console.log("Payment processed successfully.");
-    }
-    payment.doPayment = doPayment;
-})(payment || (payment = {}));
-function add(a, b) {
-    if (typeof a === 'number' && typeof b === 'number') {
-        return a + b;
-    }
-    else if (typeof a === 'string' && typeof b === 'string') {
-        return a.concat(b);
+const sm = Symbol(123);
+const add = (x, y) => x + y;
+add(1, 2);
+// 函数可选参数必须在必选参数后面
+const greet = (name, greeting) => {
+    if (greeting) {
+        return `${greeting}, ${name}`;
     }
     else {
-        return a + b;
+        return `hello ${greeting}`;
     }
-}
-const res = add(1, 2);
-const res2 = add('hello', 'world');
-const res3 = add(1, '2');
-console.log(res2);
-console.log(res3);
-payment.doPayment();
+};
+greet('will');
