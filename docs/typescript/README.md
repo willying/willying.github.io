@@ -93,42 +93,87 @@ const add: (x: number, y: number) => number = (x, y) => x + y;
     ```
 2.  TS 新增类型
 
-    - 联合类型、自定义类型（类型别名）、接口、元组、字面量类型、枚举、void、any 等
+    联合类型、自定义类型（类型别名）、接口、元组、字面量类型、枚举、void、any 等
 
-      - 联合类型
+    - **联合类型**
 
-        需求：数组中既有字符串又有数字，如何表示？
+      需求：数组中既有字符串又有数字，如何表示？
 
-        ```typescript
-        const arr: (number | string)[] = [1, "1", 2];
-        ```
+      ```typescript
+      const arr: (number | string)[] = [1, "1", 2];
+      ```
 
-        **解释：｜（竖线）在 TS 中叫做联合类型（由两个或则多个组成的类型，表示可以是这些类型中的任意一种），注意不要和 js 的 || 混淆了**
+      **解释：｜（竖线）在 TS 中叫做联合类型（由两个或则多个组成的类型，表示可以是这些类型中的任意一种），注意不要和 js 的 || 混淆了**
 
-      - 类型别名
+    - **类型别名**
 
-        类型别名（自定义类型）：为任意类型起别名
-        使用场景：当同一类型（复杂）被多次使用时，可以通过类型别名，简化该类型的使用
+      类型别名（自定义类型）：为任意类型起别名
+      使用场景：当同一类型（复杂）被多次使用时，可以通过类型别名，简化该类型的使用
 
-        ```typescript
-        type CustomArray = (number | string)[];
-        const arr1: CustomArray = [1, "2"];
-        const arr2: CustomArray = ["2", 1, "1", 2];
-        ```
+      ```typescript
+      type CustomArray = (number | string)[];
+      const arr1: CustomArray = [1, "2"];
+      const arr2: CustomArray = ["2", 1, "1", 2];
+      ```
 
-        解释：<br/>
-        1. 使用type关键字来创建类型别名
-        2. 类型别名（比如，此处的CustomArray），可以是任意的合法变量名称
-        3. 创建类型别名后，直接使用该类型别名作为变量的类型注解即可
-      - 函数类型
-        
-        函数的类型实际上是指：函数的参数和返回值的类型<br/>
-        为函数指定类型的两种方式，1 单独指定参数、返回值的类型 2 同时指定参数、返回值类型
+      解释：<br/>
 
-        1. 单独指定参数、返回值的类型
-        ```typescript
-        function add(num1:number,num2:number):number{
-            return num1+num2;
-        }
-        const add2 = (num1:number,num2:number): number => num1 + num2
-        ```
+      1. 使用 type 关键字来创建类型别名
+      2. 类型别名（比如，此处的 CustomArray），可以是任意的合法变量名称
+      3. 创建类型别名后，直接使用该类型别名作为变量的类型注解即可
+
+    - **函数类型**
+
+      函数的类型实际上是指：函数的参数和返回值的类型<br/>
+      为函数指定类型的两种方式，1 单独指定参数、返回值的类型 2 同时指定参数、返回值类型
+
+      1. 单独指定参数、返回值的类型
+
+      ```typescript
+      function add(num1: number, num2: number): number {
+        return num1 + num2;
+      }
+      const add2 = (num1: number, num2: number): number => num1 + num2;
+      ```
+
+      2. 同时指定参数和返回值类型
+
+      ```typescript
+      const add3: (num1: number, num2: number) => number = (num1, num2) =>
+        num1 + num2;
+      ```
+
+      解释：当函数作为表达式时，可以通过类似箭头函数形式的语法来为函数添加类型
+
+      注意这种形式只适用于函数表达式
+
+      3. **void 类型**
+
+      当函数没有返回值时，他的返回值类型就是 void 类型，但是如果函数显示返回 undefined，并不是 void 类型
+
+          ```typescript
+          function fn(): void {
+            console.log("fn()");
+          }
+          ```
+
+      4. **函数可选参数**
+         使用函数实现某一个功能的时候，参数可以传也可以不传，这种情况下，在给函数指定参数时，就用到可选参数了
+         比如数组的 slice 方法，可以 slice(1)还可以 slice(1,3)
+
+      ```typescript
+      function mySlice(start?: number, end?: number): number[] {
+        return [];
+      }
+      ```
+
+      5. **参数默认值**
+
+      在 TypeScript 中，你可以为函数的参数设置默认值。这使得在调用函数时，如果没有提供相应参数的值，就会使用默认值
+
+      ```typescript
+      function mySlice(start = 0, end = this.length): number[] {
+        return [];
+      }
+      ```
+    - **对象类型**

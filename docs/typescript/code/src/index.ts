@@ -11,3 +11,18 @@ const greet = (name: string, greeting?: string) => {
   }
 }
 greet('will')
+
+
+const person: {
+  name: string,
+  age: number,
+  gender: string,
+  hobby?: string[]
+  [key: string]: any
+} = {
+  name: 'will',
+  age: 26,
+  gender: '男',
+  hobby: ['学习','看电影','打游戏']
+}
+console.log(person)

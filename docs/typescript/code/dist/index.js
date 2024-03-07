@@ -12,3 +12,10 @@ const greet = (name, greeting) => {
     }
 };
 greet('will');
+const person = {
+    name: 'will',
+    age: 26,
+    gender: '男',
+    hobby: ['学习', '看电影', '打游戏']
+};
+console.log(person);
