@@ -309,9 +309,154 @@ const strings: Array<string> = ["a", "b", "c"];
 
       1. 元组类型可以确切的标记出多少个元素，以及每个元素的类型
       2. 该示例中，元素有两个元素，每个索引元素的类型都是number类型
+
 ## 类型推导
+
 自动推导出类型
 
-  ```typescript
-  let age = 18;
-  ```
+```typescript
+let age = 18;
+```
+
+在 ts 中，某些没有明确指出类型的地方，TS 的类型推论机制会帮助提供类型
+
+换句话说，由于类型推论的存在，这些地方，类型注解可以不写
+
+发生类型推论的 2 种常见场景：1 声明变量并初始化 2 决定函数的返回值
+
+## 类型断言
+
+在 TypeScript 中，类型断言（Type Assertion）是一种告诉编译器某个值的类型的方法。它与其他编程语言中的类型转换有些相似，但是在编译器中不进行实质性的转换或检查。TypeScript 的类型断言有两种形式：尖括号语法和 as 语法。
+
+**尖括号语法:**
+
+```typescript
+let someValue: any = "This is a string";
+let strLength: number = (<string>someValue).length;
+// 或者
+let anotherValue: any = "This is another string";
+let length: number = (anotherValue as string).length;
+```
+
+**as 语法:**
+
+```typescript
+let someValue: any = "This is a string";
+let strLength: number = (someValue as string).length;
+```
+
+## 字面量类型
+
+在 TypeScript 中，字面量类型（Literal Types）是一种特殊的类型，用于约束变量只能取特定的字面量值。字面量类型包括字符串字面量类型、数字字面量类型、布尔字面量类型和对象字面量类型。
+
+思考下面代码，两个变量的类型分别是什么
+
+```typescript
+let str1 = "Hello TS";
+const str2 = "Hello TS";
+```
+
+通过 TS 的类型推导机制，可以得到答案：
+
+1. 变量 str1 的类型为 string
+2. 变量 str2 的类型为'Hello TS'
+
+解释： 1. str1 使用的 let 声明的变量，它的值可以是任意字符串，所以类型是字符串 2. str2 使用的 const 声明的变量，它的值只能是'Hello TS'，所以类型是'Hello TS'
+
+使用模式：字面量类型配合联合类型一起使用
+
+使用场景：用来表示一组明确的可选值列表
+
+比如，在贪吃蛇游戏中，游戏方向的可选值只能是上、下、左、右
+
+```typescript
+function changeDirection(direction: "up" | "down" | "left" | "right") {
+  console.log(direction);
+}
+```
+
+1.字符串字面量类型：
+
+```typescript
+let status: "success" | "error";
+status = "success"; // 合法
+status = "failure"; // 编译错误，只能是 "success" 或 "error"
+```
+
+2. 数字字面量类型：
+
+```typescript
+let age: 25 | 30 | 35;
+age = 30; // 合法
+age = 40; // 编译错误，只能是 25、30 或 35
+```
+
+3. 布尔字面量类型：
+
+```typescript
+let isTrue: true;
+isTrue = true; // 合法
+isTrue = false; // 编译错误，只能是 true
+```
+
+4. 对象字面量类型：
+
+```typescript
+let person: { name: "John"; age: 30 };
+person = { name: "John", age: 30 }; // 合法
+person = { name: "Jane", age: 25 }; // 编译错误，只能是 { name: "John", age: 30 }
+```
+
+5. 联合类型和类型别名的结合：
+
+```typescript
+type Status = "success" | "error";
+let apiStatus: Status;
+apiStatus = "success"; // 合法
+apiStatus = "failure"; // 编译错误，只能是 "success" 或 "error"
+```
+
+字面量类型的主要优势在于它们提供了更精确的类型信息，使得代码更加清晰，同时通过字面量类型的约束，TypeScript 编译器能够更准确地进行类型检查。字面量类型通常在一些特定场景下用于确保变量只能取特定的值，从而增加代码的可读性和安全性。
+
+## 枚举类型
+
+枚举类型（Enum）是 TypeScript 中的一种特殊类型，枚举类型的功能类似于字面量类型 ➕ 联合类型组合的功能，也可以表示一组明确的可选值。
+
+枚举： 定义一组命名常量，它描述一个值，该值可以是这些命名常量中的一个
+
+```typescript
+enum Direction {
+  Up,
+  Down,
+  Left,
+  Right,
+}
+function dieaction(direction: Direction) {
+  console.log(direction);
+}
+dieaction(Direction.Up);
+```
+
+解释:
+
+1. 使用 enum 关键字定义枚举
+2. 约定枚举名称，枚举中的值以大写字母开头
+3. 枚举中的多个值之间，逗号隔开
+4. 定义好枚举后，直接使用枚举名称作为类型注解
+
+问题: 我们把枚举成员作为了函数的实参，它的值是什么？
+
+答：枚举成员是有值的，默认为：从 0 开始至增的数字
+
+我们把，枚举成员的值为数字的枚举称为数字枚举
+
+当然也可以给枚举成员初始值
+
+```typescript
+enum Direction {
+  Up = 10,
+  Down = 20,
+  Left = 30,
+  Right = 40,
+}
+```

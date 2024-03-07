@@ -41,3 +41,27 @@ playAnimalSound(myCat); // 输出: Meow!
 type A = number
 type B = string
 type C = A | B
+
+
+// 类型断言
+
+const someValue: any = "this is a string";
+const strLength = (<string>someValue).length;
+const strLength2 = (someValue as string).length;
+
+
+// 枚举
+
+enum Direction {
+  Up,
+  Down,
+  Left,
+  Right
+}
+function direction(direction:Direction) {
+  console.log(direction)
+}
+direction(0)
+direction(Direction.Down)
+const res = Direction[0]
+console.log(res)
