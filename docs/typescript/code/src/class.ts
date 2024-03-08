@@ -34,3 +34,47 @@ class Teacher extends Person {
 const allen = new Teacher('will', 30, '男', ['学习','打游戏'])
 
 allen.sayAge()
+
+
+interface IShape {
+  radius: number
+  calculatedArea: () => number
+  calculatedPerimeter: () => number
+}
+
+class Circle implements IShape {
+  radius: number
+  constructor(radius: number) {
+    this.radius = radius
+  }
+  calculatedArea() {
+    return Math.PI * this.radius ** 2
+  }
+  calculatedPerimeter() {
+    return 2 * Math.PI * this.radius
+  }
+}
+
+class Super {
+  readonly name:string
+  constructor(name: string) {
+    this.name = name
+  }
+  sayName() {
+    console.log(this.name)
+  }
+  // changeName() {
+  //   this.name = 'will'
+  // }
+}
+
+class Children extends Super {
+  constructor(name: string) {
+    super(name)
+    console.log(this.name)
+  }
+}
+
+const super1 = new Super('will');
+
+

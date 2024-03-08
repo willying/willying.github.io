@@ -28,3 +28,29 @@ class Teacher extends Person {
 }
 const allen = new Teacher('will', 30, '男', ['学习', '打游戏']);
 allen.sayAge();
+class Circle {
+    constructor(radius) {
+        this.radius = radius;
+    }
+    calculatedArea() {
+        return Math.PI * this.radius ** 2;
+    }
+    calculatedPerimeter() {
+        return 2 * Math.PI * this.radius;
+    }
+}
+class Super {
+    constructor(name) {
+        this.name = name;
+    }
+    sayName() {
+        console.log(this.name);
+    }
+}
+class Children extends Super {
+    constructor(name) {
+        super(name);
+        console.log(this.name);
+    }
+}
+const super1 = new Super('will');

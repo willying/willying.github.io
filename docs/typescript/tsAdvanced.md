@@ -102,3 +102,113 @@ const dog = new Dog();
 
 1. 通过 extends 关键字实现继承
 2. 子类 Dog 继承父类 Animal 的所有属性和方法
+
+### implements 继承
+
+```typescript
+interface IShape {
+  radius: number;
+  calculatedArea: () => number;
+  calculatedPerimeter: () => number;
+}
+
+class Circle implements IShape {
+  radius: number;
+  constructor(radius: number) {
+    this.radius = radius;
+  }
+  calculatedArea() {
+    return Math.PI * this.radius ** 2;
+  }
+  calculatedPerimeter() {
+    return 2 * Math.PI * this.radius;
+  }
+}
+```
+
+解释：
+
+1. 通过 implements 关键字让 class 实现接口
+2. Point 类实现 IPoint 接口，意味着 Point 类必须提供 IPoint 接扣的所有属性和方法
+
+### class 类的可见修饰符
+
+1. public 修饰的属性或方法是公有的，可以在任何地方被访问到，默认所有的属性和方法都是 public 的
+
+```typescript
+class Super {
+  public name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+class Children extends Super {
+  constructor(name: string) {
+    super(name);
+    console.log(this.name);
+  }
+}
+```
+
+2. private 修饰的属性或方法是私有的，不能在声明它的类的外部访问
+
+```typescript
+class Super {
+  private name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+  sayName() {
+    console.log(this.name) // 类本身可见
+  }
+}
+class Children extends Super {
+  constructor(name: string) {
+    super(name);
+    // console.log(this.name);  子类不允许被方法
+  }
+}
+const super = new Super('super');
+console.log(super.name); // 报错,也不允许在类的外部访问
+super.sayName(); // 正常
+```
+
+3. protected 修饰的属性或方法是受保护的，它和 private 类似，区别是它在子类中也是允许被访问的
+
+```typescript
+class Super {
+  protected name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+  sayName() {
+    console.log(this.name) // 类本身可见
+  }
+}
+class Children extends Super {
+  constructor(name: string) {
+    super(name);
+    console.log(this.name); // 继承类可见
+  }
+}
+const super = new Super('super');
+console.log(super.name); // 报错,也不允许在类的外部访问
+super.sayName(); // 正常
+```
+
+4. readonly 修饰的属性表示只读属性，只允许出现在属性声明或索引签名或构造函数中
+
+```typescript
+class Super {
+  readonly name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+  sayName() {
+    console.log(this.name); // 类本身可见
+  }
+  changeName() {
+    this.name = "new name"; // 报错,不允许修改
+  }
+}
+```
