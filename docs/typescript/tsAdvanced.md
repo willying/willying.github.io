@@ -288,3 +288,8 @@ arr1 = arr2; // 兼容，因为 Array<number> 兼容于 number[]
       2. 数组forEach方法的第一个参数是回调函数，该示例中类型为(value: string,index: number,array: string[]) => void
       3. 在JS中省略用不到的函数参数实际上是很常见的，这样的使用方式，促成了TS中函数类型之间的兼容性
       4. 并且回调函数是有类型的，所以，TS会自动推导出item,index,array的类型
+
+<audio controls>
+  <source src="https://dl.stream.qqmusic.qq.com/RS02062wrBay4T3l7w.mp3?guid=8519748192&vkey=22E1B0B57CE41055892EED05E0E2E98C2F90C443EEF2632565D026443B609960C2D32E1D245D2F5ED11475ABB21F9B8C553A08D7D2104A29&uin=&fromtag=120052" type="audio/mp3">
+  Your browser does not support the audio element.
+</audio>
