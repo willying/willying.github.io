@@ -9,6 +9,9 @@ module.exports = {
     "@vuepress/nprogress",
   ],
   themeConfig: {
+    logo: "/logo.jpeg",
+    displayAllHeaders: true, // 默认值：false
+    lastUpdated: 'Last Updated',
     nav: [
       { text: "Home", link: "/" },
       {
@@ -46,6 +49,10 @@ module.exports = {
       { text: "Node", link: "/node/" },
       { text: "Webpack", link: "/webpack/" },
       { text: "CI/CD", link: "/cicd/" },
+      {
+        text: 'Java',
+        link: '/java/'
+      }
     ],
     sidebar: {
       '/browser/': [

@@ -54,3 +54,11 @@ class Children extends Super {
     }
 }
 const super1 = new Super('will');
+let add1 = function add1(x, y) {
+    console.log(x + y);
+};
+let add2 = function add2(x, y, z) {
+    console.log(x + y + z);
+};
+// add1 = add2 函数少的可以赋值给多的，但是多的不能赋值给少的
+// 在类中子类可以赋值给父类，父亲不能赋值给子类

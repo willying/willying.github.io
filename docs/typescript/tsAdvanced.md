@@ -212,3 +212,52 @@ class Super {
   }
 }
 ```
+
+### TS 类型兼容性说明
+
+两种类型系统：1 Structural Type System 结构类型系统 2 Nominal Type System 标示类型系统
+
+TS 采用的是结构化类型系统，也叫 duck typing(鸭子类型)，类型检查关注的是值具有的形状<br/>
+也就是说，在结构化类型系统中，如果两个对象具有相同的形状，则认为他们属于同一类
+
+```typescript
+interface Animal {
+  name: string;
+}
+
+interface Dog {
+  name: string;
+  breed: string;
+}
+
+let animal: Animal;
+let dog: Dog;
+
+animal = dog; // 兼容，因为 Dog 包含 Animal 的所有属性
+// dog = animal; // 不兼容，因为 Animal 不包含 Dog 的所有属性
+
+// 函数兼容性
+let func1 = (x: number) => {};
+let func2 = (x: number, y: number) => {};
+
+func2 = func1; // 兼容
+// func1 = func2; // 不兼容，因为 func1 的参数个数少于 func2
+
+// 数组兼容性
+let arr1: number[] = [1, 2, 3];
+let arr2: Array<number> = [1, 2, 3, 4];
+
+arr1 = arr2; // 兼容，因为 Array<number> 兼容于 number[]
+// arr2 = arr1; // 不兼容，因为 arr1 的长度少于 arr2
+```
+
+解释：
+
+1. Print 和 Print2D 是两个不同的类型
+2. 变量 P 的类型被显示的标注为 Print 类型，但是，它却是 Print2D 的实例，并没有发生类型错误
+3. 因为 TS 是结构化类型系统，只检查 Point 和 Porint2D 的结构是否相同
+4. 但是，如果在 Nominal Type System 中，比如 Java，C#等，它们是不同的类，类型无法兼容
+
+- 对象类型的兼容性
+- 接口之间的类型兼容性
+- 函数之间类型的兼容性
