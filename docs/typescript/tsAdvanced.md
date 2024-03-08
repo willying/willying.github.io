@@ -259,5 +259,32 @@ arr1 = arr2; // 兼容，因为 Array<number> 兼容于 number[]
 4. 但是，如果在 Nominal Type System 中，比如 Java，C#等，它们是不同的类，类型无法兼容
 
 - 对象类型的兼容性
+
+      注意，在结构化类型系统中，如果两个对象具有相同的形状，则认为他们属于同一类型，这种说法并不准确
+      更准确的说法是Y的成员至少与X相同，则X兼容Y(成员多的可以赋值给成员少的)
+
 - 接口之间的类型兼容性
+
+      接口的类型兼容类似与class，并且class与interface之间也可以兼容
+
 - 函数之间类型的兼容性
+
+      函数之间的兼容情况比较复杂，需要考虑： 1. 参数个数 2. 参数类型 3. 返回值类型
+
+      参数个数，参数多的兼容参数少的（或则说参数少的可以赋值给参数多的）
+
+  ```typescript
+  type F1 = (a:number) => void;
+  type F2 = (a:number, b:number) => void;
+  F2 = F1; // 兼容
+  F1 = F2; // 不兼容
+
+  const arr = ['a','b','c']
+  arr.forEach(() => {})
+  arr.forEach((item) => {})
+  ```
+  解释:
+      1. 参数少的可以赋值给参数多的
+      2. 数组forEach方法的第一个参数是回调函数，该示例中类型为(value: string,index: number,array: string[]) => void
+      3. 在JS中省略用不到的函数参数实际上是很常见的，这样的使用方式，促成了TS中函数类型之间的兼容性
+      4. 并且回调函数是有类型的，所以，TS会自动推导出item,index,array的类型
