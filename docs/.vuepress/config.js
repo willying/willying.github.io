@@ -53,7 +53,8 @@ module.exports = {
         'property',
       ],
       '/typescript/': [
-        ''
+        '',
+        'tsAdvanced'
       ]
     }
   },

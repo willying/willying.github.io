@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class Circle {
     constructor(radius) {
         this.radius = radius;
@@ -36,7 +37,6 @@ var Direction;
     Direction[Direction["Left"] = 2] = "Left";
     Direction[Direction["Right"] = 3] = "Right";
 })(Direction || (Direction = {}));
-console.log(Direction)
 function direction(direction) {
     console.log(direction);
 }
@@ -44,3 +44,11 @@ direction(0);
 direction(Direction.Down);
 const res = Direction[0];
 console.log(res);
+const p = {
+    x: 100,
+    y: 100
+};
+function formatPoint(point) {
+    console.log(point);
+}
+formatPoint(p);

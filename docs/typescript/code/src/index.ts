@@ -49,9 +49,7 @@ const someValue: any = "this is a string";
 const strLength = (<string>someValue).length;
 const strLength2 = (someValue as string).length;
 
-
 // 枚举
-
 enum Direction {
   Up,
   Down,
@@ -65,3 +63,15 @@ direction(0)
 direction(Direction.Down)
 const res = Direction[0]
 console.log(res)
+
+
+const p = {
+  x: 100,
+  y: 100
+}
+
+function formatPoint(point: typeof p) {
+  console.log(point)
+}
+
+formatPoint(p)

@@ -1,4 +1,4 @@
-# TypeScript
+# TypeScript 基础
 
 ## 类型注解
 
@@ -459,4 +459,56 @@ enum Direction {
   Left = 30,
   Right = 40,
 }
+```
+
+字符串枚举：枚举成员的值是字符串
+
+```typescript
+enum Direction {
+  Up = "UP",
+  Down = "DOWN",
+  Left = "LEFT",
+  Right = "RIGHT",
+}
+```
+
+注意： 字符串枚举没有自增长行为，因此，字符串枚举的每一个成员必须有初始值
+
+枚举是 TS 为数不多的非 Javascript 类型扩展的特性之一<br/>
+因为：其他类型仅仅被当作类型，而枚举不仅用做类型，还提供值，枚举成员都是有值的<br/>
+也就是说，其他类型回在编译为 JS 代码自动移除，但是枚举类型会被编译为 JS 代码<br/>
+说明：枚举和前面提到的字面量加联合类型功能类型，都用来表示一组明确的可选值列表<br/>
+一般情况下，推荐使用字面量+联合类型的方式，因为相比枚举类型，这种方式更加直观和高效
+
+## any 类型
+
+原则不推荐使用 any！，这会让 typescript 变为 anyscript，ts 失去类型保护的优势
+
+因为当值的类型为 any，可以对值进行任何操作，而且不会有代码提示
+
+```typescript
+let value: any;
+value.foo.bar; // 不会报错
+value.trim(); //
+```
+
+## typeof运算符
+
+总所周知，JS提供了typeof操作符号，用来在JS中获取数据的类型
+
+```typescript
+console.log(typeof "hello world")
+```
+实际上，TS也提供了typeof操作符，可以在类型上下文中引用变量或属性的类型（类型查询）
+
+使用场景： 根据已有变量的值，获取该值的类型，来简化类型书写
+
+```typescript
+let p = { x:1,y:2 }
+function formatPoint(point: {x:number,y:number}) {}
+formatPoint(p)
+
+function formatPoint2(point: typeof p) {}
+
+// typeof 不能直接查看函数调用返回值类型
 ```
