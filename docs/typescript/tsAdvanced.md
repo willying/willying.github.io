@@ -715,3 +715,26 @@ console.log(ages);
 // };
 // Error: Type 'string' is not assignable to type 'number'.
 ```
+
+## 索引签名类型
+
+绝大多数情况下，我们都可以在使用对象前就确定对象的结构，并为对象添加准确的类型
+
+使用场景：当无法确定对象中有哪些属性的时候（或者说对象中可以出现多个属性），此时就用到了索引签名类型。
+
+```typescript
+interface Person {
+  [key: string]: string | number;
+}
+const obj: Person = {
+  name: "will",
+  age: 26,
+};
+```
+
+解释:
+
+1. 使用[key:string]来约束该接口中允许出现的属性名称，表示只要是 string 类型的属性名称，都可以出现在对象中
+2. 这样 obj 中就可以出现任意多个属性
+3. key 只是一个占位符，可以换成任意合法的变量名称
+4. 隐藏的前置知识，JS 中对象({})的键是 string 类型的
