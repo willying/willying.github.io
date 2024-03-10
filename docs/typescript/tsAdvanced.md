@@ -25,7 +25,7 @@ const p = new Person();
 1. 根据 TS 中的类型推断，可以知道类型实例对象 p 的类型是 Person
 2. **TS 中的 class，不仅提供了 class 的语法功能，也作为一种类型存在**
 
-## 实例属性初始化:
+## 实例属性初始化
 
 ```typescript
 class Person {
