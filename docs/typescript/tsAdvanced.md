@@ -529,17 +529,189 @@ getProps(person, "name"); // 正确
 
 ```typescript
 interface IdFunc<Type> {
-  id: (value: Type) => Type
-  ids: () => Type[]
+  id: (value: Type) => Type;
+  ids: () => Type[];
 }
 
 let obj: IdFunc<number> = {
   id: (value) => value,
-  ids: () => [1, 2, 3]
+  ids: () => [1, 2, 3],
+};
+```
+
+解释:
+
+1. 在接口名称的后面添加<类型变量>那么，这个接口也就变成了泛型接口
+2. 接口的类型变量，对接口所有其他成员可见，也就是接口中所有成员都可以使用类型变量
+3. 使用泛型接口时，需要显示指定具体的类型，比如 IdFunc\<number\>
+4. 此时，id 方法的参数和返回值类型都是 number，ids 方法的返回值类型是 number[]
+
+## 数组是泛型接口
+
+实际上，JS 中的数组在 TS 中就是一个泛型接口
+
+当我们使用数组时，TS 会根据数组的不同类型，来自动将类型变量设置为相应的类型
+
+技巧：可以通过 Ctry + 鼠标左键(command + 鼠标左键)来查看接口的类型定义
+
+## 泛型类
+
+泛型类： class 也可以配合泛型类使用
+
+比如 React 的 class 组件的基类 Component 就是泛型类，不同组件有不同的 props 和 state
+
+```typescript
+interface IState {
+  count: number;
+}
+interface IPros {
+  maxLength: number;
+}
+class InputCount extends React.Component<IProps, IState> {
+  state: IState = { count: 0 };
+  render() {
+    return (
+      <div>
+        <p>{this.props.maxLength}</p>
+      </div>
+    );
+  }
 }
 ```
-解释:
-  1. 在接口名称的后面添加<类型变量>那么，这个接口也就变成了泛型接口
-  2. 接口的类型变量，对接口所有其他成员可见，也就是接口中所有成员都可以使用类型变量
-  3. 使用泛型接口时，需要显示指定具体的类型，比如IdFunc\<number\>
-  4.  此时，id方法的参数和返回值类型都是number，ids方法的返回值类型是number[]
+
+解释：React.Component 泛型类两个变量，分别指 props 和 state 的类型
+
+创建泛型类
+
+```typescript
+class Stack<T> {
+  private elements: T[] = [];
+
+  push(element: T): void {
+    this.elements.push(element);
+  }
+
+  pop(): T | undefined {
+    return this.elements.pop();
+  }
+
+  peek(): T | undefined {
+    return this.elements[this.elements.length - 1];
+  }
+
+  isEmpty(): boolean {
+    return this.elements.length === 0;
+  }
+}
+
+// 使用示例
+const numberStack = new Stack<number>();
+numberStack.push(1);
+numberStack.push(2);
+numberStack.push(3);
+
+console.log(numberStack.pop()); // 输出: 3
+console.log(numberStack.peek()); // 输出: 2
+
+const stringStack = new Stack<string>();
+stringStack.push("hello");
+stringStack.push("world");
+
+console.log(stringStack.pop()); // 输出: world
+console.log(stringStack.peek()); // 输出: hello
+```
+
+类似与泛型接口，在创建 class 实例时，在类后面通过<类型>来指定明确的类型
+
+## 泛型工具类型 Partial
+
+在 TypeScript 中，Partial\<T\> 是一个泛型类型，它将类型 T 中的所有属性设置为可选的。这意味着使用 Partial\<T\> 包装的类型 T 中的所有属性都变为可选的，可以选择性地提供这些属性的值。
+
+```typescript
+interface User {
+  id: number;
+  name: string;
+  age: number;
+}
+
+// 使用 Partial<User> 将 User 类型的属性变为可选
+function updateUser(user: User, update: Partial<User>): User {
+  return { ...user, ...update };
+}
+
+const existingUser: User = { id: 1, name: "Alice", age: 30 };
+
+const updatedUser = updateUser(existingUser, { name: "Alice Smith" });
+console.log(updatedUser); // 输出: { id: 1, name: 'Alice Smith', age: 30 }
+
+const partialUpdate: Partial<User> = { age: 31 };
+const updatedUser2 = updateUser(existingUser, partialUpdate);
+console.log(updatedUser2); // 输出: { id: 1, name: 'Alice', age: 31 }
+```
+
+## 泛型工具类型 Readonly
+
+在 TypeScript 中，ReadOnly\<T\> 是一个内置的类型，它可以用来创建一个只读版本的类型 T。这意味着使用 ReadOnly\<T\> 包装的类型 T 中的所有属性都变为只读的，不能被修改。
+
+```typescript
+interface Point {
+  x: number;
+  y: number;
+}
+
+const point: ReadOnly<Point> = { x: 10, y: 20 };
+
+// 下面的操作会导致 TypeScript 报错，因为 point 是只读的
+// point.x = 5; // Error: Cannot assign to 'x' because it is a read-only property
+
+// 可以正常访问属性的值
+console.log(point.x); // 输出: 10
+console.log(point.y); // 输出: 20
+```
+
+## 泛型工具类型 Pick
+
+在 TypeScript 中，Pick\<T, K\> 是一个内置的类型工具，用于从类型 T 中选择指定属性集合 K，并创建一个新的类型。这意味着使用 Pick\<T, K\> 可以从原始类型 T 中选择部分属性，形成一个新的类型。
+
+```typescript
+interface Person {
+  name: string;
+  age: number;
+  address: string;
+}
+
+// 从 Person 类型中选择 name 和 age 属性，创建一个新的类型
+type BasicInfo = Pick<Person, "name" | "age">;
+
+const person: BasicInfo = { name: "Alice", age: 30 };
+console.log(person); // 输出: { name: 'Alice', age: 30 }
+
+// 下面的操作会导致 TypeScript 报错，因为 address 不在 BasicInfo 类型中
+// const person2: BasicInfo = { name: 'Bob', age: 25, address: '123 Street' };
+// Error: Object literal may only specify known properties, and 'address' does not exist in type 'BasicInfo'.
+```
+
+## 泛型工具类型 Record
+
+在 TypeScript 中，Record\<K, T\> 是一个内置的类型工具，用于创建一个包含指定键类型 K 和值类型 T 的新对象类型。它可以用来定义一个具有特定键类型和值类型的对象。
+
+```typescript
+// 创建一个对象，键是 string 类型，值是 number 类型
+type Ages = Record<string, number>;
+
+const ages: Ages = {
+  Alice: 30,
+  Bob: 25,
+  Charlie: 35,
+};
+
+console.log(ages);
+// 输出: { Alice: 30, Bob: 25, Charlie: 35 }
+
+// 下面的操作会导致 TypeScript 报错，因为值的类型不是 number
+// const ages2: Ages = {
+//   Alice: '30',
+//   Bob: 25,
+// };
+// Error: Type 'string' is not assignable to type 'number'.
+```
