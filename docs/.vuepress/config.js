@@ -9,7 +9,7 @@ module.exports = {
     "@vuepress/nprogress",
   ],
   themeConfig: {
-    logo: "/image.png",
+    logo: "/logo.jpeg",
     displayAllHeaders: true, // 默认值：false
     lastUpdated: 'Last Updated',
     nav: [
