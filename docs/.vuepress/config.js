@@ -61,7 +61,8 @@ module.exports = {
       ],
       '/typescript/': [
         '',
-        'tsAdvanced'
+        'tsAdvanced',
+        'typeDeclarationFile'
       ]
     }
   },

@@ -819,4 +819,40 @@ type PartiaalProps = Partial1<Props>;
 
 ## 索引查询类型(基本使用)
 
+刚刚用到的 T\[key\]语法，在 TS 中叫做索引查询类型
+
+作用，用来查询属性的类型
+
+```typescript
+type Props = {
+  x: number;
+  y: string;
+  z: boolean;
+};
+type TypeX = Props["x"];
+```
+
+解释： Props['x']表示查询类型 Props 中属性'x'对应的 number，所以，TypeA 的类型为 number
+
+注意: \[\-]中的属性必须存在于被查询类型中，否则会报错
+
 ## 索引查询类型(同时查询多个)
+
+索引查询类型的其他使用方式，同时查询多个索引的类型
+
+```typescript
+type Props = {
+  a: number;
+  b: string;
+  c: boolean;
+};
+type TypeA = Props["a" | "b"]; // string | number
+```
+
+解释: 使用字符串字面量的联合类型，获取属性 a 和 b 对应的类型，结果为 string | number
+
+```typescript
+type TypeA = Props[keyof Props]; // string | number | boolean
+```
+
+解释: 使用 keyof 操作符获取 Props 中所有键对应的类型，结果为 string | number | boolean
