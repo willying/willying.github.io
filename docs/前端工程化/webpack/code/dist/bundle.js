@@ -1,1 +1,1 @@
-(()=>{"use strict";console.log(300),console.log(400),console.log("嘿嘿"),console.log("will 真帅")})();
+!function(){"use strict";console.log(300),console.log(400),console.log("嘿嘿"),console.log("will 真帅")}();
