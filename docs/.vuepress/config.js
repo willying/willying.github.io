@@ -47,7 +47,7 @@ module.exports = {
       },
       { text: "React", link: "/react/" },
       { text: "Node", link: "/node/" },
-      { text: "Webpack", link: "/webpack/" },
+      { text: "Webpack", link: "/前端工程化/webpack/" },
       { text: "CI/CD", link: "/cicd/" },
       {
         text: 'Java',
@@ -63,6 +63,9 @@ module.exports = {
         '',
         'tsAdvanced',
         'typeDeclarationFile'
+      ],
+      '/前端工程化/webpack/': [
+        ''
       ]
     }
   },
