@@ -12,3 +12,4 @@ ul {
   background: -webkit-gradient(linear, left top, right top, from(#ff8a00), to(#da1b60));
   background: linear-gradient(to right, #ff8a00, #da1b60);
 }
+@font-face{font-family:"OpenSans";src:url(src/fonts/OpenSans/OpenSans-Boldc7e0.ttf) format("ttf"),url(src/fonts/OpenSans/OpenSans-Boldba5f.woff) format("woff")}html{font-family:"OpenSans",sans-serif}ul{display:-webkit-box;display:-ms-flexbox;display:flex}ul li{padding:20px;color:#fff;background-image:url(src/img/logo2379.jpeg)}

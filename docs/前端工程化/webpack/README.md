@@ -176,13 +176,13 @@ app.listen(3000, () => {
 
 #### 2.3.5. 小结
 
-只有在开发时才会使用自动编译工具，如webpack-dev-server
+只有在开发时才会使用自动编译工具，如 webpack-dev-server
 
-项目上线都会直接使用webpack打包构建，不会要使用这些自动构建工具
+项目上线都会直接使用 webpack 打包构建，不会要使用这些自动构建工具
 
 自动编译工具只是为了提高开发体验
 
-### 2.4. 处理css
+### 2.4. 处理 css
 
 ```javascript
 // 配置用来解析.css文件的loader(style-loader和css-loader)
@@ -191,18 +191,38 @@ module.exports = {
     {
       test: /\.css$/,
       use: ["style-loader", "css-loader"], // webpack底层调用这些包的顺序是从右往左
-    }
-  ]
-}
+    },
+  ],
+};
 ```
-解释: 
-  - style-loader将模块导出的内容作为样式并添加到 DOM 中
-  - css-loader 加载 CSS 文件并解析 import 的 CSS 文件，最终返回 CSS 代码
-### 2.5. 处理less和sass
+
+解释:
+
+- style-loader 将模块导出的内容作为样式并添加到 DOM 中
+- css-loader 加载 CSS 文件并解析 import 的 CSS 文件，最终返回 CSS 代码
+
+### 2.5. 处理 less 和 sass
 
 ```javascript
   npm i less less-loader sass-loader node-sass -D
+
+  npm install sass-loader sass  --save-dev
 ```
+
+解释:
+
+1. node-sass
+
+   - node-sass 是一个 Node.js 模块，它是 Node.js 绑定的 LibSass，LibSass 是一个用 C/C++ 编写的 Sass 编译器。
+   - node-sass 在后续版本中已经被弃用，建议使用 sass 替代。
+   - 由于 node-sass 是对 LibSass 的绑定，因此它的性能通常比 sass 差一些。
+
+2. sass
+
+   - sass 是 Dart 编写的原生 Sass 编译器，它是官方推荐的 Sass 编译器
+   - sass 具有更快的编译速度和更好的维护支持
+   - 与 node-sass 相比，sass 提供了更好的功能和更好的性能
+   - 由于 node-sass 已经被官方弃用，推荐使用 sass 作为 Sass 编译器。因此，您在安装依赖时可以使用 sass 替代 node-sass
 
 ```javascript
  {
@@ -210,9 +230,78 @@ module.exports = {
     use: ["style-loader", "css-loader",'less-loader'], // webpack底层调用这些包的顺序是从右往左
   }
 ```
+
 ```javascript
  {
     test: /\.less$/,
     use: ["style-loader", "css-loader",'sass-loader'], // webpack底层调用这些包的顺序是从右往左
   }
+```
+
+### 2.6. 处理图片和字体文件
+
+```javascript
+npm i file-loader url-loader -D
+```
+
+url-loader 封装了 file-loader，但是如果想要使用 url-loader，必须安装 file-loader
+
+```javascript
+module: {
+  rules: [
+    {
+      test: /\.(png|jpg|gif)$/,
+      use: [
+        {
+          loader: "url-loader",
+          options: {
+            limit: 8 * 1024, // 小于8kb的图片会被base64处理
+            outputPath: "images", // 图片打包后的文件夹
+            name: "[name][hash:6].[ext]", // 打包后的图片命名
+          },
+        },
+      ],
+    },
+  ];
+}
+```
+
+解释：
+在 webpack5 中，使用资源模块处理文件类型,webpack5 默认会对资源文件进行处理
+
+```javascript
+{
+  test: /\.(png|jpe?g|gif|svg)$/i,
+  type: 'asset',
+  parser: {
+    dataUrlCondition: {
+      maxSize: 8 * 1024 // 将小于 8KB 的文件转换为 base64
+    }
+  }
+}
+```
+
+### 2.7. babel
+
+```javascript
+npm i babel-loader @babel/core @babel/preset-env -D
+```
+
+如果需要支持更高级别的 ES6 语法，可以继续安装插件:
+
+```javascript
+npm i @babel/plugin-transform-runtime @babel/runtime -D
+```
+```javascript
+{
+    test: /\.m?js$/,
+    exclude: /node_modules/,
+    use: {
+      loader: "babel-loader",
+      options: {
+        presets: ['@babel/preset-env'],
+        plugins: ['@babel/plugin-transform-runtime']
+      }
+    }
+}
 ```
