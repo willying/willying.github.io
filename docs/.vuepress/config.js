@@ -1,12 +1,4 @@
 module.exports = {
-  chainWebpack: (config, isServer) => {
-    config.module
-      .rule('ignore')
-      .test(/\/前端工程化\/webpack\/code\/node_modules/)  // 定义要忽略的文件类型
-      .use('null-loader')
-      .loader('null-loader')
-      .end();
-  },
   title: "花果山集训营",
   description: "Just playing around",
   head: [
