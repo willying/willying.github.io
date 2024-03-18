@@ -1,6 +1,8 @@
 // 创建一个长度为10，且用零来填充
 const buf1 = Buffer.alloc(10)
-console.log(buf1)
+
+buf1.write('hello', 'utf-8')
+console.log(buf1.toString())
 // 创建一个长度为10，且用01填充的buffer
 
 const buf2 = Buffer.alloc(10, 1)
@@ -15,6 +17,10 @@ const buf3 = Buffer.allocUnsafe(10)
 console.log(buf3)
 
 // 创建一个包含0x1,0x2,0x3的buffer
-const buf4 = Buffer.from([1,2,3])
+const buf4 = Buffer.from([1,2,3]) // 数组里面的每一个数字都会转换为二进制存到buffer中，如果是字符串，先找到对应字面的unicode编码，然后转换为16进制存储
 
-console.log(buf4)
+console.log("willying",buf4)
+
+const buf5 = Buffer.from([105,108,111,101,121,111,117]);
+
+console.log(buf5.toString())

@@ -64,6 +64,12 @@ module.exports = {
         'tsAdvanced',
         'typeDeclarationFile'
       ],
+      '/node/': [
+        '',
+        'NODE_FS',
+        'NODE_PATH',
+        'NODE_HTTP'
+      ],
       '/前端工程化/webpack/': [
         ''
       ]
