@@ -48,7 +48,7 @@
 | 404    | 找不到资源                                           | Not Found             |
 | 500    | 服务器内部错误                                       | Internal Server Error |
 
-## IP
+### IP
 
 IP 也成为 IP 地址，本身是一个数字标识
 
@@ -68,7 +68,7 @@ IP 本质是一个 32Bit 的二进制数字，每 8 个 Bit 一组，把每一�
 | 局域网 IP          | 192.168.0.0 ~ 192.168.255.255 , 172.16.0.0 ~ 172.31.255.255, 10.0.0.0 ~ 10.255.255.255 |
 | 广域网 IP(公网 IP) | 除去上述之外                                                                           |
 
-## 端口
+### 端口
 
 在计算机网络中，端口是用于标识特定进程或服务的逻辑通道。每个网络通信端点都有一个端口号，它可以是一个数字，范围从 0 到 65535，一个运用程序可以使用一个或多个端口
 
@@ -233,8 +233,10 @@ server.listen(9000, function () {
     http
       .createServer((req, res) => {
         // 明确设置状态码和状态消息
-        res.writeHead(404, 'Resource Not Found', {'Content-Type': 'text/plain'});
-        res.end('The requested resource was not found on this server.');
+        res.writeHead(404, "Resource Not Found", {
+          "Content-Type": "text/plain",
+        });
+        res.end("The requested resource was not found on this server.");
       })
       .listen(3000);
 
@@ -256,6 +258,7 @@ server.listen(9000, function () {
 
     console.log("Server listening on port 3000");
     ```
+
 - 设置响应状态描述
   - res.statusMessage = 'I love you'
 - 设置响应头
@@ -263,6 +266,29 @@ server.listen(9000, function () {
   - res.setHeader('Server-List', 'WillYingServer')
   - 设置多个同名响应头 res.setHeader('test', ['a','b','c'])
 - 响应体设置
-  - res.write('hello'),一般在write设置了响应体，那么res.end()就不要设置响应体， write方法可以多次调用
-  - 直接使用res.end('hello'), 在每一次执行回调函数时候只能有一个end方法
- 
+  - res.write('hello'),一般在 write 设置了响应体，那么 res.end()就不要设置响应体， write 方法可以多次调用
+  - 直接使用 res.end('hello'), 在每一次执行回调函数时候只能有一个 end 方法
+
+## 网页资源加载的基本过程
+
+网页资源加载的基本过程如下：
+
+1.  **解析 HTML**：当用户在浏览器地址栏输入网址或点击链接时，浏览器会发送请求到服务器，并接收服务器返回的 HTML 文件。
+2.  **构建 DOM 树**：浏览器开始解析 HTML 文件，并构建文档对象模型（DOM）树，表示页面的结构。
+3.  **加载外部资源**：在解析 HTML 文件的过程中，浏览器会遇到外部资源的引用，比如 CSS 文件、JavaScript 文件、图片、字体等。这些资源的加载方式如下：
+
+- **CSS 文件**：浏览器会并行下载 CSS 文件，并在下载完成后解析样式规则，应用到页面上的元素，从而影响页面的布局和外观
+- **JavaScript 文件**：浏览器在下载 JavaScript 文件时会阻塞页面的解析和渲染，因为 JavaScript 可能会修改页面的结构和内容。JavaScript 文件下载完成后会执行，影响页面的交互和行为
+- **图片、字体等资源**：这些资源的加载不会阻塞 HTML 的解析和其他资源的加载，但会影响页面的渲染和性能。
+
+4. **构建 CSSOM 树**：浏览器会解析 CSS 文件，构建 CSS 对象模型（CSSOM）树，表示页面的样式信息。
+5. **构建渲染树**：浏览器将 DOM 树和 CSSOM 树结合起来，构建渲染树（Render Tree），确定页面上哪些元素需要显示，以及它们的样式和布局信息。
+6. **页面布局（Reflow）**：浏览器根据渲染树的信息，进行页面布局计算，确定每个元素在页面中的位置和大小。
+7. **页面绘制（Repaint）**：浏览器根据页面布局信息，进行页面渲染，将页面内容绘制到屏幕上。
+8. **交互和动态更新**：用户与页面交互时，JavaScript 可以修改 DOM 结构和样式，触发页面的重新布局和绘制，实现动态更新。
+
+## 静态资源与动态资源
+
+- 静态资源：静态资源是指在服务器上存储的不会随着用户请求而改变的文件，例如 HTML 文件、CSS 样式表、JavaScript 脚本、图片、字体文件等。这些文件在服务器上保存不会发生变化，并且每次请求这些资源时，服务器都会返回相同的内容。静态资源的特点是内容固定，不会根据用户或其他条件动态生成。
+
+- 动态资源：动态资源是指在服务器上存储的内容可能会根据用户请求、用户输入或其他条件而动态生成的文件。通常，动态资源的内容是根据用户的请求实时生成的，例如动态网页、数据库查询结果、用户个性化内容等。动态资源的内容不是固定的，而是根据特定条件动态生成的。

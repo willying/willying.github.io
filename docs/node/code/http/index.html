@@ -4,23 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
-    table {
-      border-collapse: collapse;
-    }
-    table tr td {
-      border: 1px solid;
-      padding: 30px;
-      cursor: pointer;
-    }
-    table tr:nth-child(odd) {
-      background-color: aqua;
-    }
-  </style>
+  <link rel="stylesheet" href="./table.css">
+  <link rel="stylesheet" href="./demo.css">
 </head>
 <body>
   <table>
@@ -45,21 +30,6 @@
       <td></td>
     </tr>
   </table>
-  <script>
-    const table = document.querySelector('table');
-    const tds = document.querySelectorAll('td');
-    table.addEventListener('click', function(e) {
-      const target = e.target;
-      if (target.tagName.toUpperCase() === 'TD') {
-        clearTableBackground()
-        target.style.backgroundColor = 'red';
-      }
-    })
-    function clearTableBackground() {
-      tds.forEach(td => {
-        td.style.backgroundColor = '';
-      })
-    }
-  </script>
+  <script src="./table.js"></script>
 </body>
 </html>
