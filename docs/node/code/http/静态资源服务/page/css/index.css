@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+table {
+  border-collapse: collapse;
+}
+table tr td {
+  border: 1px solid;
+  padding: 30px;
+  cursor: pointer;
+}
+table tr:nth-child(odd) {
+  background-color: aqua;
+}

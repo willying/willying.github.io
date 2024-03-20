@@ -292,3 +292,115 @@ server.listen(9000, function () {
 - 静态资源：静态资源是指在服务器上存储的不会随着用户请求而改变的文件，例如 HTML 文件、CSS 样式表、JavaScript 脚本、图片、字体文件等。这些文件在服务器上保存不会发生变化，并且每次请求这些资源时，服务器都会返回相同的内容。静态资源的特点是内容固定，不会根据用户或其他条件动态生成。
 
 - 动态资源：动态资源是指在服务器上存储的内容可能会根据用户请求、用户输入或其他条件而动态生成的文件。通常，动态资源的内容是根据用户的请求实时生成的，例如动态网页、数据库查询结果、用户个性化内容等。动态资源的内容不是固定的，而是根据特定条件动态生成的。
+
+## 网站根目录或静态资源目录
+
+HTTP 服务在那个文件夹中寻找静态资源，那个文件夹就是静态资源目录，也称为网站根目录
+
+> 思考: vscode 中使用 live-server 访问 html 时，它启动的服务网站根目录是？
+
+## 网页 URL 之绝对路径
+
+网页中的 URL 主要分为两大类：相对路径和绝对路径
+
+- 绝对路径
+  绝对路径可靠性更强，而且更容易理解
+  | 形式 | 特点 |
+  | ------ | -------- |
+  | http://www.baidu.com/web | 直接向目标资源发送请求，容易理解，网站的外链会用到此形式 |
+  | //atguigu.com/web | 与页面的 URL 的协议拼接形成完整的 URL 再发送请求，大型网站用的比较多 |
+  | /web | 与页面的 URL 的协议、主机名、端口拼接形成完整的 URL 再发送请求，中小型网站 |
+- 相对路径
+  相对路径在发送请求时，需要与当前页面 URL 路径进行**计算**，得到完整的 URL 后，再发送请求，学习阶段用的比较多
+
+  例如当前页面 url 为http://www.atguigu.com/course/h5.html
+  | 形式 | 最终 URL |
+  | ------ | -------- |
+  | ./css/app.css | http://www.atguigu.com/course/css/app.css |
+  | js/app.js | http://www.atguigu.com/course/js/app.js |
+  | ../img/logo.png | http://www.atguigu.com/img/logo.png |
+  | ../..mp4/show.mp4 | http://www.atguigu.com/mp4/show.mp4 |
+
+### 网页中使用 URL 场景小结
+
+包括但不限于
+
+    - a 标签的 href
+    - link 标签的 href
+    - script 标签的 src
+    - img 标签的 src
+    - video audio 标签的 src
+    - form 的action
+    - Ajax请求中的URL
+
+## 设置资源类型(mime 类型)
+
+媒体类型(通常称为 Multipurpose Internet Mail Extensions 或 MIME 类型)是一种标准，用来表示文档、文件或字节流的性质和格式。在 HTTP 协议消息头中，使用 Content-Type 字段来表示具体请求中的媒体类型信息。
+
+mime 类型结构: [type]/[subType]
+例如： text/html text/css image/jpeg image/png application/json
+
+http 服务可以设置响应头 Content-Type 来表明响应体中的 MIME 类型，浏览器会根据该类型决定如何处理资源
+
+下面是常见的文件对应的 mime 类型
+
+| 文件类型 | mime 类型        |
+| -------- | ---------------- |
+| html     | text/html        |
+| css      | text/css         |
+| js       | text/js          |
+| png      | image/png        |
+| jpg      | image/jpg        |
+| gif      | image/gif        |
+| mp4      | video/mp4        |
+| mp3      | audio/mpeg       |
+| json     | application/json |
+
+> 对于未知资源类型，可以选择 application/octet-stream 类型，浏览器遇到该类型的响应时，会对响应体内容进行独立存储，也就是我们常说的下载效果
+
+## NodeJs 模块化
+
+将一个复杂的程序文件依据一定的规则拆分多个文件的过程称为模块化
+其中拆分出的每一个文件就是一个模块，模块的内部数据是私有的，不过模块可以暴露内部数据以便其他模块使用
+
+### 什么是模块化项目
+
+编码时按照模块一个一个编码的，整个项目就是一个模块化项目
+
+### 模块化的好处
+
+- 防止命名冲突
+- 高复用性
+- 高维护性
+
+### 暴露数据
+
+模块暴力数据有两种：
+
+1. module.exports = value
+2. exports.xxx = value
+
+> 使用时注意事项
+>
+> 1. module.exports 可以暴露任意数据
+> 2. 不能使用 exports= value 的形式保留，模块内部 module 与 exports 的隐士关系 exports = module.exports = {}
+> 3. require 的返回结果是 module.exports 的值
+
+### 导入或引入模块
+
+在模块中使用 require 传入文件路径即可引入文件
+
+```js
+const test = require("test");
+```
+
+require 使用的注意事项:
+
+1. 对于自己创建的模块，导入时路径建议写相对路径，且不能./和../
+2. js 和 json 文件导入时，可以不用写后缀，c/c++编写的 node 扩展文件也可以不用写后缀，但是一般用不到
+3. 如果导入其他类型的文件，会以 js 文件进行处理
+4. 如果导入的路径是一个文件夹，则会首先检查该文件夹下 package.json 文件中 main 属性对应的文件，如果 main 属性不存在，或则 package.json 文件不存在，则默认导入该文件夹下的 index.js 或 index.json,如果还没有找到则会报错
+
+### commonjs规范
+module.exports、exports以及require这些都是CommonJs模块化规范的内容。
+而nodejs是CommonJs模块化规范的实现。，二者关系像javascript和ECMAScript

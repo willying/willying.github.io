@@ -68,7 +68,8 @@ module.exports = {
         '',
         'NODE_FS',
         'NODE_PATH',
-        'NODE_HTTP'
+        'NODE_HTTP',
+        'NODE_EXPRESS'
       ],
       '/前端工程化/webpack/': [
         ''
